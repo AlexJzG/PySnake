@@ -1,21 +1,11 @@
 import pygame
-from movement import handle_input
-from player import Snake, Fruit
-from grid import Grid
+from game import SnakeGame
 
-HEIGHT = 600
-WIDTH = 600
-FPS = 60
-grid_size = 50
+FPS = 5
+GUI = True
 
 pygame.init()
-screen = pygame.display.set_mode([WIDTH, HEIGHT])
-pygame.display.set_caption("Grid")
-
-grid = Grid(WIDTH, HEIGHT, grid_size)
-player = Snake(100, 100, grid_size, FPS // 6)
-fruit = Fruit(grid_size)
-fruit.move(grid, set(player.position()))
+snake = SnakeGame()
 
 running = True
 clock = pygame.time.Clock()
@@ -24,20 +14,24 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    direction = None
 
-    handle_input(player, grid)
-    screen.fill((255, 255, 255))
-    running = player.move(grid)
-    if fruit.position() == player.head():
-        running = fruit.move(grid, set(player.position()))
-        if running:
-            player.grow()
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        direction = 'left'
+    if keys[pygame.K_RIGHT]:
+        direction = 'right'
+    if keys[pygame.K_UP]:
+        direction = 'up'
+    if keys[pygame.K_DOWN]:
+        direction = 'down'
 
-    player.draw(screen)
-    fruit.draw(screen)
-    grid.draw(screen)
-
-    pygame.display.flip()
+    snake.move(direction)
+    if GUI:
+        snake.draw()
+        pygame.display.flip()
+    if snake.ended:
+        running = False
     clock.tick(FPS)
 
 
