@@ -1,38 +1,43 @@
 import pygame
-from game import SnakeGame
+from src.game import SnakeGame
 
-FPS = 5
-GUI = True
 
-pygame.init()
-snake = SnakeGame()
+def main():
+    FPS = 5
+    GUI = True
 
-running = True
-clock = pygame.time.Clock()
+    pygame.init()
+    snake = SnakeGame()
 
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    running = True
+    clock = pygame.time.Clock()
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+        direction = None
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            direction = 'left'
+        if keys[pygame.K_RIGHT]:
+            direction = 'right'
+        if keys[pygame.K_UP]:
+            direction = 'up'
+        if keys[pygame.K_DOWN]:
+            direction = 'down'
+
+        snake.move(direction)
+        if GUI:
+            snake.draw()
+            pygame.display.flip()
+        if snake.ended:
             running = False
-    direction = None
+        clock.tick(FPS)
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-        direction = 'left'
-    if keys[pygame.K_RIGHT]:
-        direction = 'right'
-    if keys[pygame.K_UP]:
-        direction = 'up'
-    if keys[pygame.K_DOWN]:
-        direction = 'down'
-
-    snake.move(direction)
-    if GUI:
-        snake.draw()
-        pygame.display.flip()
-    if snake.ended:
-        running = False
-    clock.tick(FPS)
+    pygame.quit()
 
 
-pygame.quit()
+if __name__ == '__main__':
+    main()

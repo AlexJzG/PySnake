@@ -1,8 +1,8 @@
 import pygame
 
-from grid import Grid
-from player import Player
-from fruit import Fruit
+from .grid import Grid
+from .player import Player
+from .fruit import Fruit
 
 
 class SnakeGame:
