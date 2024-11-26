@@ -1,4 +1,5 @@
 import pygame
+import numpy as np
 
 from .grid import Grid
 from .player import Player
@@ -56,3 +57,10 @@ class SnakeGame:
                             (0, self.height * self.cell_size),
                             f"Score : {self.get_score()}",
                             (0, 0, 0))
+
+    def get_state(self):
+        state_matrix = np.zeros(self.height, self.width)
+        state_matrix[self.fruit.position()] = 3
+        for coordinate in self.player.position():
+            state_matrix[coordinate] = 1
+        state_matrix[self.player.head()] = 2
