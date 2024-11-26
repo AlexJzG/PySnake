@@ -64,3 +64,4 @@ class SnakeGame:
         for coordinate in self.player.position():
             state_matrix[coordinate] = 1
         state_matrix[self.player.head()] = 2
+        return state_matrix
