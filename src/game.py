@@ -59,7 +59,7 @@ class SnakeGame:
                             (0, 0, 0))
 
     def get_state(self):
-        state_matrix = np.zeros(self.height, self.width)
+        state_matrix = np.zeros((self.height, self.width))
         state_matrix[self.fruit.position()] = 3
         for coordinate in self.player.position():
             state_matrix[coordinate] = 1
